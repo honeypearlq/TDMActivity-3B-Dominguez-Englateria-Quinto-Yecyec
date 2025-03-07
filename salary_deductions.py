@@ -1,30 +1,52 @@
-def compute_salary_deductions(gross_salary):
-    """Calculates salary deductions and net salary."""
-    sss_deduction = 1200
-    philhealth_deduction = (gross_salary * 0.05) / 2
-    pagibig_deduction = 100
-    tax_deduction = 1875  
+#use of modular functions for individual calculations
+def get_sss_deduction():
+    return 1200  
 
-    total_deductions = sss_deduction + philhealth_deduction + pagibig_deduction + tax_deduction
-    net_salary = gross_salary - total_deductions
+def get_pagibig_deduction():
+    return 100  
 
-    print("\n=== Salary Breakdown ===")
-    print(f"Gross Salary: {gross_salary:.2f}")
-    print(f"SSS Deduction: {sss_deduction:.2f}")
-    print(f"PhilHealth Deduction: {philhealth_deduction:.2f}")
-    print(f"Pag-IBIG Deduction: {pagibig_deduction:.2f}")
-    print(f"Tax Deduction: {tax_deduction:.2f}")
-    print(f"Total Deductions: {total_deductions:.2f}")
-    print(f"Net Salary: {net_salary:.2f}")
+def compute_philhealth_deduction(salary):
+    return (salary * 0.05) / 2  
 
+def compute_tax_deduction():
+    return 1875  
 
+def compute_total_deductions(salary):
+    sss = get_sss_deduction()
+    pagibig = get_pagibig_deduction()
+    philhealth = compute_philhealth_deduction(salary)
+    tax = compute_tax_deduction()
 
-try:
-    user_salary = float(input("Enter your monthly salary: "))
-    if user_salary <= 0:
-        raise ValueError("Salary must be a positive number.")
-    
-    compute_salary_deductions(user_salary)
+    total = sss + pagibig + philhealth + tax
+    return total, sss, pagibig, philhealth, tax
 
-except ValueError as e:
-    print("Invalid input:", e)
+#improved naming
+def compute_net_salary(salary):
+    deductions, sss, pagibig, philhealth, tax = compute_total_deductions(salary)
+    net_salary = salary - deductions
+
+    return {
+        "Gross Salary": salary,
+        "SSS Deduction": sss,
+        "Pag-IBIG Deduction": pagibig,
+        "PhilHealth Deduction": philhealth,
+        "Tax Deduction": tax,
+        "Total Deductions": deductions,
+        "Net Salary": net_salary
+    }
+
+def main():
+    try:
+        salary = float(input("Enter your monthly salary: "))
+        if salary <= 0:
+            raise ValueError("Salary must be a positive number.")
+
+        salary_details = compute_net_salary(salary)
+        for key, value in salary_details.items():
+            print(f"{key}: {value}")
+
+    except ValueError as e:
+        print("Invalid input:", e)
+
+if _name_ == "_main_":
+    main()
