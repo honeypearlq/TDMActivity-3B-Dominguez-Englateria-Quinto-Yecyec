@@ -1,19 +1,30 @@
-def compute_deductions(salary):
-    sss = 1200
-    philhealth = (salary * 0.05) / 2
-    pagibig = 100
-    tax = 1875  # Assuming fixed value for simplicity
+def compute_salary_deductions(gross_salary):
+    """Calculates salary deductions and net salary."""
+    sss_deduction = 1200
+    philhealth_deduction = (gross_salary * 0.05) / 2
+    pagibig_deduction = 100
+    tax_deduction = 1875  
 
-    deductions = sss + philhealth + pagibig + tax
-    net_salary = salary - deductions
+    total_deductions = sss_deduction + philhealth_deduction + pagibig_deduction + tax_deduction
+    net_salary = gross_salary - total_deductions
 
-    print("Gross Salary:", salary)
-    print("SSS Deduction:", sss)
-    print("PhilHealth Deduction:", philhealth)
-    print("Pag-IBIG Deduction:", pagibig)
-    print("Tax Deduction:", tax)
-    print("Total Deductions:", deductions)
-    print("Net Salary:", net_salary)
+    print("\n=== Salary Breakdown ===")
+    print(f"Gross Salary: {gross_salary:.2f}")
+    print(f"SSS Deduction: {sss_deduction:.2f}")
+    print(f"PhilHealth Deduction: {philhealth_deduction:.2f}")
+    print(f"Pag-IBIG Deduction: {pagibig_deduction:.2f}")
+    print(f"Tax Deduction: {tax_deduction:.2f}")
+    print(f"Total Deductions: {total_deductions:.2f}")
+    print(f"Net Salary: {net_salary:.2f}")
 
-salary = float(input("Enter your monthly salary: "))
-compute_deductions(salary)
+
+
+try:
+    user_salary = float(input("Enter your monthly salary: "))
+    if user_salary <= 0:
+        raise ValueError("Salary must be a positive number.")
+    
+    compute_salary_deductions(user_salary)
+
+except ValueError as e:
+    print("Invalid input:", e)
